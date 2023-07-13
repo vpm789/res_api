@@ -37,7 +37,7 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student foundStudent = studentService.editStudent(student);
         if (foundStudent == null) {
