@@ -13,7 +13,7 @@ public class StudentService {
     private long lastId = 0;
 
     public Student createStudent(Student student) {
-        student.setId(++lastId);
+        student.setId(lastId++);
         students.put(lastId, student);
         return student;
     }
