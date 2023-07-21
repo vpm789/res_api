@@ -12,7 +12,7 @@ public class Faculty {
     private String name;
     private String color;
 
-    /*public Faculty() {
+    public Faculty() {
 
     }
 
@@ -20,7 +20,7 @@ public class Faculty {
         this.id = id;
         this.name = name;
         this.color = color;
-    }*/
+    }
 
     @Override
     public String toString() {
