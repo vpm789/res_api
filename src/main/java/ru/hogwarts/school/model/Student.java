@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import java.util.Objects;
 @Entity(name = "student")
 public class Student {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int age;
-
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
     public Student() {
 
     }
