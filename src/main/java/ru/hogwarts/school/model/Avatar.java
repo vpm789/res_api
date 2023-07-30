@@ -2,6 +2,8 @@ package ru.hogwarts.school.model;
 
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+
 @Entity
 public class Avatar {
     @Id
@@ -16,6 +18,29 @@ public class Avatar {
     private byte[] data;
     @OneToOne
     private Student student;
+
+    public Avatar() {
+    }
+
+    public Avatar(Long id, String filePath, String mediaType, long fileSize, Student student) {
+        this.id = id;
+        this.filePath = filePath;
+        this.mediaType = mediaType;
+        this.fileSize = fileSize;
+        this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Avatar{" +
+                "id=" + id +
+                ", filePath='" + filePath + '\'' +
+                ", mediaType='" + mediaType + '\'' +
+                ", fileSize=" + fileSize +
+                ", data=" + Arrays.toString(data) +
+                ", student=" + student +
+                '}';
+    }
 
     public Long getId() {
         return id;
