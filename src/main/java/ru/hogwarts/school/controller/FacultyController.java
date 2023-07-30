@@ -32,7 +32,7 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getAllFaculties(){
         return ResponseEntity.ok(facultyService.getAllFaculties());
     }
-    @GetMapping("/get_by_name_color")
+    @GetMapping("/get-by-name-color")
     public ResponseEntity getFacultyByNameOrColor(@RequestParam(required = false, name = "name") String name,
                                                          @RequestParam(required = false, name = "color") String color){
         if (name != null && !name.isEmpty() && !name.isBlank()) {
@@ -63,7 +63,7 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/find_faculty_by_student")
+    @GetMapping("/find-faculty-by-student")
     public Faculty findFacultyByStudent (@RequestBody Student student){
         return facultyService.findFacultyByStudent(student);
     }
