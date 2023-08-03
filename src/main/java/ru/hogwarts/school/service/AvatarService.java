@@ -11,43 +11,55 @@ import ru.hogwarts.school.repositories.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class AvatarService {
     private final String avatarsDir;
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
+    private final boolean saveOnDisk;
 
     public AvatarService(AvatarRepository avatarRepository,
                          StudentRepository studentRepository,
-                         @Value("${path.to.avatars.folder}") String avatarsDir) {
+                         @Value("${path.to.avatars.folder}") String avatarsDir,
+                         @Value("${save-avatars-on-disk}") boolean saveOnDisk) {
         this.avatarRepository = avatarRepository;
         this.studentRepository = studentRepository;
         this.avatarsDir = avatarsDir;
+        this.saveOnDisk = saveOnDisk;
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
-        Student student = studentRepository.getReferenceById(studentId);
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(Objects.requireNonNull(avatarFile.getOriginalFilename())));
-        Files.createDirectories(filePath.getParent());
-        Files.deleteIfExists(filePath);
+        var student = studentRepository.findById(studentId).orElseThrow();
+        var filePath = saveOnDisk ? saveOnDisk(avatarFile, student) : null;
 
-        try (InputStream is = avatarFile.getInputStream();
-             OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-             BufferedInputStream bis = new BufferedInputStream(is, 1024);
-             BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-        ) {
-            bis.transferTo(bos);
-        }
+        var avatar = avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+        avatar.setFilePath(filePath);
+        avatar.setData(avatarFile.getBytes());
+        avatar.setFileSize(avatarFile.getSize());
+        avatar.setMediaType(avatarFile.getContentType());
+        avatar.setStudent(student);
+        avatarRepository.save(avatar);
     }
-    private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
+
+    private String saveOnDisk(MultipartFile avatarFile, Student student) throws IOException {
+        var path = Path.of(avatarsDir);
+        if (!path.toFile().exists()) {
+            Files.createDirectories(path);
+        }
+
+        var dotIndex = avatarFile.getOriginalFilename().lastIndexOf('.');
+        var ext = avatarFile.getOriginalFilename().substring(dotIndex + 1);
+        var filePath = avatarsDir + "/" + student.getId() + "_" + student.getName() + "." + ext;
+
+        try (var in = avatarFile.getInputStream();
+             var out = new FileOutputStream(filePath)) {
+            in.transferTo(out);
+        }
+        return filePath;
     }
 
     public Avatar findAvatar(long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElseThrow();
+        return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 }

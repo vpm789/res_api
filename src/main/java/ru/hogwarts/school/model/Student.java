@@ -3,7 +3,7 @@ package ru.hogwarts.school.model;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-@Entity(name = "student")
+@Entity
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,7 +11,7 @@ public class StudentServiceTest {
     private StudentRepository studentRepository;
 
     private AvatarRepository avatarRepository;
-    private final StudentService out = new StudentService(studentRepository, avatarRepository);
+    private final StudentService out = new StudentService(studentRepository);
     @Test
     public void studentServiceTest() {
         /*Student studentPetya = out.createStudent(new Student(0L, "Petya", 19));
