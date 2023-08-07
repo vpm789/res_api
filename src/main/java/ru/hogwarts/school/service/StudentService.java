@@ -1,19 +1,15 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+
 
 @Service
 public class StudentService {
-    /*private final HashMap<Long, Student> students = new HashMap<>();
-    private long lastId = 0;*/
-
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {

@@ -2,12 +2,14 @@ package ru.hogwarts.school;
 
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.AvatarRepository;
 import ru.hogwarts.school.repositories.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentServiceTest {
     private StudentRepository studentRepository;
+
+    private AvatarRepository avatarRepository;
     private final StudentService out = new StudentService(studentRepository);
     @Test
     public void studentServiceTest() {

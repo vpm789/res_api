@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
-@Entity(name = "Faculty")
+@Entity
 public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String color;
-    @OneToMany (mappedBy = "faculty")
+    @OneToMany (mappedBy = "faculty", fetch = FetchType.EAGER)
     private Collection<Student> student;
     public Faculty() {
 
