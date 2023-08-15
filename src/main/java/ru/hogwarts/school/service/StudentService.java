@@ -60,4 +60,8 @@ public class StudentService {
     public List<Student> getLastStudents() {
         return studentRepository.getLastStudents();
     }
+
+    public Collection<Student> getStudentsByName(String name) {
+        return studentRepository.getStudentsByName(name);
+    }
 }
