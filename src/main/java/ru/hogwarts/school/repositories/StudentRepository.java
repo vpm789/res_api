@@ -20,4 +20,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT * FROM student OFFSET (SELECT COUNT(*) FROM student)-5", nativeQuery = true)
     List<Student> getLastStudents();
+
+    Collection<Student> getStudentsByName(String name);
 }
