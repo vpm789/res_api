@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 public class StudentService {
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
@@ -18,18 +21,27 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
+        logger.info("Creating student: {}", student);
         return studentRepository.save(student);
     }
 
     public Student findStudent(Long id) {
-        return studentRepository.findById(id).get();
+        if (studentRepository.findById(id).isPresent()) {
+            var findedStudent = studentRepository.findById(id).get();
+            logger.info("Student: {} found", findedStudent);
+            return findedStudent;
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     public Student editStudent(Student student) {
+        logger.info("The method editStudent has invoked");
         return studentRepository.save(student);
     }
 
     public void deleteStudent(Long id) {
+        logger.info("The method deleteStudent has invoked");
         studentRepository.deleteById(id);
     }
 
@@ -41,11 +53,11 @@ public class StudentService {
         return studentRepository.findStudentByAge(age);
     }
 
-    public Collection<Student> findStudentByAgeBetween(int minAge, int maxAge){
+    public Collection<Student> findStudentByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findStudentByAgeBetween(minAge, maxAge);
     }
 
-    public Collection<Student> findStudentByFaculty(Faculty faculty){
+    public Collection<Student> findStudentByFaculty(Faculty faculty) {
         return studentRepository.findStudentByFaculty(faculty);
     }
 
