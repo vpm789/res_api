@@ -67,4 +67,14 @@ public class FacultyController {
         return facultyService.findFacultyByStudent(student);
     }
 
+    @GetMapping("/max-faculty-name")
+    public ResponseEntity<String> getFacultyMaxName(){
+        return ResponseEntity.ok(facultyService.getFacultyMaxName());
+    }
+
+    @GetMapping("/get-integer")
+    public ResponseEntity<Integer> getInteger(){
+        return ResponseEntity.ok(facultyService.getInteger());
+    }
+
 }

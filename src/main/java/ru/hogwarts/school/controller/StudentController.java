@@ -90,4 +90,9 @@ public class StudentController {
         return studentService.getStudentsByName(name);
     }
 
+    @GetMapping("/first_letter/{firstLetter}")
+    public ResponseEntity<Collection<Student>> getStudentsFirstLetter(@PathVariable String firstLetter) {
+        return ResponseEntity.ok(studentService.getStudentsFirstLetter(firstLetter));
+    }
+
 }
