@@ -72,9 +72,9 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.getFacultyMaxName());
     }
 
-    @GetMapping("/get-integer")
-    public ResponseEntity<Integer> getInteger(){
-        return ResponseEntity.ok(facultyService.getInteger());
+    @GetMapping("/stream-parallel/{limit}")
+    public ResponseEntity<String> getInteger(@PathVariable int limit){
+        return ResponseEntity.ok(facultyService.calculateWithStreamParallel(limit));
     }
 
 }

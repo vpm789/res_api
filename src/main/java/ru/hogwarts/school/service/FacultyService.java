@@ -60,12 +60,14 @@ public class FacultyService {
     }
 
 
-    public Integer getInteger() {
+    public String calculateWithStreamParallel(int limit) {
+        long start = System.currentTimeMillis();
         int sum = Stream
                 .iterate(1, a -> a + 1)
-                .limit(1000000)
                 .parallel()
+                .limit(limit)
                 .reduce(0, Integer::sum);
-        return sum;
+        long end = System.currentTimeMillis();
+        return "Duration of calculation sum: " + sum + " is " + (end - start);
     }
 }
