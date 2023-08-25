@@ -67,4 +67,14 @@ public class FacultyController {
         return facultyService.findFacultyByStudent(student);
     }
 
+    @GetMapping("/max-faculty-name")
+    public ResponseEntity<String> getFacultyMaxName(){
+        return ResponseEntity.ok(facultyService.getFacultyMaxName());
+    }
+
+    @GetMapping("/stream-parallel/{limit}")
+    public ResponseEntity<String> getInteger(@PathVariable int limit){
+        return ResponseEntity.ok(facultyService.calculateWithStreamParallel(limit));
+    }
+
 }
