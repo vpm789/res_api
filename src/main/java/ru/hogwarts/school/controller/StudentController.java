@@ -95,4 +95,13 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentsFirstLetter(firstLetter));
     }
 
+    @GetMapping("/get-students-unsync")
+    public void getStudentsUnsync() {
+        studentService.getStudentsUnsync();
+    }
+
+    @GetMapping("/get-students-sync")
+    public void getStudentsSync() {
+        studentService.getStudentsSync();
+    }
 }

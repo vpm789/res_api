@@ -92,4 +92,47 @@ public class StudentService {
                 .filter(p -> p.getName().startsWith(firstLetter))
                 .collect(Collectors.toList());
     }
+
+    public void getStudentsUnsync() {
+        List<String> studentNames = studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .toList();
+
+        System.out.print(studentNames);
+        System.out.println();
+        System.out.println(studentNames.get(0));
+        System.out.println(studentNames.get(1));
+
+        new Thread(() ->{
+            System.out.println(studentNames.get(2));
+            System.out.println(studentNames.get(3));
+        }).start();
+
+        new Thread(() ->{
+            System.out.println(studentNames.get(4));
+            System.out.println(studentNames.get(5));
+        }).start();
+    }
+
+    public void getStudentsSync() {
+        var students = studentRepository.findAll();
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
+        new Thread(() ->{
+            print(students.get(2));
+            print(students.get(3));
+        }).start();
+
+        new Thread(() ->{
+            print(students.get(4));
+            print(students.get(5));
+        }).start();
+    }
+
+    public synchronized void print(Object o) {
+        System.out.println(o.toString());
+    }
 }
